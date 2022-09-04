@@ -1,5 +1,5 @@
 Programs and Dependencies
 
-MS SQL Management Studio 18 ---> 2 tables. Check SQL Queries Folder
-SQL2019-SSEI-Dev
-Visual Studio 2022
+MS SQL Management Studio 18 ---> 2 tables. Check SQL Queries Folder <br>
+SQL2019-SSEI-Dev <br>
+Visual Studio 2022 <br>
