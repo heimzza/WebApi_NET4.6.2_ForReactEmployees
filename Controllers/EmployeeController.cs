@@ -7,7 +7,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
-
+using WebAPI.Models;
 
 namespace WebAPI.Controllers
 {
@@ -29,6 +29,32 @@ namespace WebAPI.Controllers
             }
 
             return Request.CreateResponse(HttpStatusCode.OK, table);
+        }
+
+        public string Post(Employee employee)
+        {
+            try
+            {
+                DataTable table = new DataTable();
+
+                string query = $"insert into dbo.Employees (EmployeeName, Department, MailID, DOJ) values('{employee.EmployeeName}', " +
+                    $"'{employee.Department}', '{employee.MailID}', '{employee.DOJ?.ToString("yyyy-MM-dd")}')";
+
+                var con = new SqlConnection(ConfigurationManager.ConnectionStrings["EmployeeDB"].ConnectionString);
+                var command = new SqlCommand(query, con);
+
+                using (var dataAdapter = new SqlDataAdapter(command))
+                {
+                    command.CommandType = CommandType.Text;
+                    dataAdapter.Fill(table);
+                }
+
+                return "Added successfully";
+            }
+            catch (Exception)
+            {
+                return "And error occured during action";
+            }
         }
     }
 }
