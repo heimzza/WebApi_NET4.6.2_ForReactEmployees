@@ -56,5 +56,31 @@ namespace WebAPI.Controllers
                 return "And error occured during action";
             }
         }
+        public string Put(Employee employee)
+        {
+            try
+            {
+                DataTable table = new DataTable();
+
+                string query = $"update dbo.Employees set EmployeeName='{employee.EmployeeName}', " +
+                    $"Department='{employee.Department}', MailID='{employee.MailID}', DOJ='{employee.DOJ?.ToString("yyyy-MM-dd")}' " +
+                    $"where EmployeeID={employee.EmployeeID}";
+
+                var con = new SqlConnection(ConfigurationManager.ConnectionStrings["EmployeeDB"].ConnectionString);
+                var command = new SqlCommand(query, con);
+
+                using (var dataAdapter = new SqlDataAdapter(command))
+                {
+                    command.CommandType = CommandType.Text;
+                    dataAdapter.Fill(table);
+                }
+
+                return "Updated successfully";
+            }
+            catch (Exception)
+            {
+                return "And error occured during action";
+            }
+        }
     }
 }
