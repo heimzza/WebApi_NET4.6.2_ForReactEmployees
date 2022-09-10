@@ -82,5 +82,30 @@ namespace WebAPI.Controllers
                 return "And error occured during action";
             }
         }
+
+        public string Delete(int id)
+        {
+            try
+            {
+                DataTable table = new DataTable();
+
+                string query = $"delete from dbo.Departments where DepartmentID={id}";
+
+                var con = new SqlConnection(ConfigurationManager.ConnectionStrings["EmployeeDB"].ConnectionString);
+                var command = new SqlCommand(query, con);
+
+                using (var dataAdapter = new SqlDataAdapter(command))
+                {
+                    command.CommandType = CommandType.Text;
+                    dataAdapter.Fill(table);
+                }
+
+                return "Deleted successfully";
+            }
+            catch (Exception)
+            {
+                return "And error occured during action";
+            }
+        }
     }
 }
